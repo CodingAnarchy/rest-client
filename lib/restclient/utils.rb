@@ -250,7 +250,6 @@ module RestClient
         case v
         when Array, Hash, ParamsArray
           if v.is_a?(Array) and v.none?{|e| [Array, Hash, ParamsArray].include?(e.class)}
-            v = escape(v.to_s) if uri_escape && v
             result << [processed_key, v]
           else
             result.concat flatten_params(v, uri_escape, processed_key)
