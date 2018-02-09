@@ -246,10 +246,15 @@ module RestClient
         end
 
         processed_key = parent_key ? "#{parent_key}#{k.nil? ? "" : "[#{k}]"}" : k
-
+        
         case v
         when Array, Hash, ParamsArray
-          result.concat flatten_params(v, uri_escape, processed_key)
+          if v.is_a?(Array) and v.none?{|e| [Array, Hash, ParamsArray].include?(e.class)}
+            v = escape(v.to_s) if uri_escape && v
+            result << [processed_key, v]
+          else
+            result.concat flatten_params(v, uri_escape, processed_key)
+          end
         else
           v = escape(v.to_s) if uri_escape && v
           result << [processed_key, v]
