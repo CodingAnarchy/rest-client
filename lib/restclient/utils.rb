@@ -245,7 +245,7 @@ module RestClient
           k = escape(k.to_s) if uri_escape
         end
 
-        processed_key = parent_key ? "#{parent_key}#{k.nil? ? "" : "[#{k}]"}]" : k
+        processed_key = parent_key ? "#{parent_key}#{k.nil? ? "" : "[#{k}]"}" : k
 
         case v
         when Array, Hash, ParamsArray
